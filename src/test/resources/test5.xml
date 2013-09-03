@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TheOptions>
+	<xi:include xmlns:xi="http://www.lexml.gov.br/schema/xloom"
+		href="file:///home/joao/workspace/xloom/src/test/resources/test4.xml"
+		xmlns:madoc="http://www.lexml.gov.br/madoc" 
+		select="//madoc:Option"/>
+		  		 
+	
+</TheOptions>

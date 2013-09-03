@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Q1:MadocDocument xmlns:Q1="http://www.lexml.gov.br/madoc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sf="http://www.senado.gov.br/requerimento/modelo/metadado"
+	xsi:schemaLocation="http://www.lexml.gov.br/madoc ../../main/xsd/Madoc.xsd http://www.senado.gov.br/requerimento/modelo/metadado ../../main/xsd/ModeloRequerimento.xsd">
+
+	<Q1:Metadata id="m001">
+		<sf:Titulo>Requerimento de Criação de Comissão Temporária Interna/Externa</sf:Titulo>
+		<!-- <sf:assuntos name="Comissão"> <sf:assunto>Comissão Temporária Interna</sf:assunto> 
+			<sf:assunto>Comissão Temporária Externa</sf:assunto> <sf:assunto>Comissão 
+			Parlamentar de Inquérito</sf:assunto> </sf:assuntos> -->
+		<sf:Indexacao>CPI, Criação, ...</sf:Indexacao>
+		<sf:PublicoAlvo>Senador</sf:PublicoAlvo>
+		<!-- <sf:fundamentacao>RISF, art. 74, I</sf:fundamentacao> -->
+	</Q1:Metadata>
+
+	<Q1:Wizard
+		display="Requerimento de Criação de Comissão Temporária Interna/Externa">
+		<Q1:Pages>
+
+
+			<Q1:Page id="p-detalhes"
+				display="Requerimento de Criação de Comissão Temporária Interna/Externa">
+				<Q1:Question display="Fundamentação:" id="q-tipo-comissao"
+					enabled="true" xsi:type="Q1:RadioBoxGroupQuestionType"
+					defaultOptionId="cti">
+					<Q1:Option value="Comissão Temporária Interna"
+						display="Comissão Temporária Interna (RISF, art. 71, I)" id="cti" />
+					<Q1:Option value="Comissão Temporária Externa"
+						display="Comissão Temporária Externa (RISF, art. 71, II)" id="cte" />
+				</Q1:Question>
+
+				<Q1:Section id="p-det-s-comp" display="Composição">
+					<Q1:Question display="Quantidade de membros titulares"
+						id="q-quant-membros-titulares" xsi:type="Q1:IntegerQuestionType"
+						minValue="1" maxValue="81" defaultValue="12" />
+
+					<Q1:Question display="Quantidade de membros suplentes"
+						id="q-quant-suplentes" xsi:type="Q1:RadioBoxGroupQuestionType"
+						defaultOptionId="q-quant-suplentes-opt-mesma">
+						<Q1:Option value="mesma_quant" display="Mesma quantidade de membros titulares"
+							id="q-quant-suplentes-opt-mesma" />
+						<Q1:Option value="nao-especificar" display="Não especificar"
+							id="q-quant-suplentes-nao-especificar" />
+						<Q1:Option value="habilita-quantidade" display="Quantidade:"
+							id="q-quant-suplentes-quant" />
+					</Q1:Question>
+
+					<Q1:Question display="" id="q-quant-membros-suplentes"
+						xsi:type="Q1:IntegerQuestionType" enabled="false" defaultValue="12"
+						minValue="1" maxValue="81" />
+
+					<Q1:Question display="Ressalvas da composição (assegurada...)"
+						id="q-ressalvas" xsi:type="Q1:CheckBoxGroupQuestionType">
+						<Q1:Option
+							value="a participação de um membro de cada partido político com representação nesta Casa"
+							display="a participação de um membro de cada partido político com representação nesta Casa"
+							id="q-ressalvas-um-membro" />
+						<Q1:Option value="a participação de dois membros de cada região do país"
+							display="a participação de dois membros de cada região do país"
+							id="q-ressalvas-dois-membros" />
+						<Q1:Option value="" display="Nova ressalva:" id="q-ressalvas-nova"
+							inputText="true" />
+					</Q1:Question>
+				</Q1:Section>
+
+				<Q1:Question display="Prazo da Comissão (em dias)" id="q-prazo"
+					xsi:type="Q1:IntegerQuestionType" required="true" defaultValue="120"
+					minValue="1" maxValue="3600" />
+
+				<Q1:Question
+					display="Objetivo (iniciar com verbo no infinitivo em minúsculas e finalizar com ponto)"
+					id="q-objetivo" xsi:type="Q1:RichTextQuestionType" lines="8"
+					hint="ex: apresentar, acompanhar, apurar, representar, investigar..." />
+
+				<Q1:Question display="Justificativa (finalizar com ponto)"
+					id="q-justificativa" xsi:type="Q1:RichTextQuestionType" lines="40"
+					visible="true" />
+
+				<Q1:Question display="Local:" id="q-local" xsi:type="Q1:ComboQuestionType"
+					defaultOptionId="loc1">
+					<Q1:Option value="Sala das Sessões" display="Sala das Sessões"
+						id="loc1" />
+					<Q1:Option value="Sala da Comissão" display="Sala Comissão"
+						id="loc2" />
+				</Q1:Question>
+
+				<Q1:Question display="Data" id="q-data" xsi:type="Q1:DateQuestionType"
+					today="true" required="true" hint="ex: 13/12/2012" />
+
+				<Q1:Question display="Autoria do Requerimento:" id="q-autoria"
+					xsi:type="Q1:RadioBoxGroupQuestionType" defaultOptionId="q-autoria-senador"
+					required="true">
+					<Q1:Option value="Senador" id="q-autoria-senador"
+						inputText="true" />
+					<Q1:Option value="Comissão" id="q-autoria-comissao"
+						inputText="true" />
+				</Q1:Question>
+
+				<Q1:Question display="Quantidade de assinaturas adicionais:"
+					id="q-qt-espacos-assinaturas" xsi:type="Q1:IntegerQuestionType"
+					defaultValue="0" minValue="0" maxValue="81" />
+
+			</Q1:Page>
+
+		</Q1:Pages>
+
+		<Q1:Rules>
+
+			<Q1:Rule questionId="q-quant-suplentes" id="r1"
+				xsi:type="Q1:SwitchRuleType">
+				<Q1:Case questionValue="habilita-quantidade">
+					<Q1:action id="r1-a1" xsi:type="Q1:ChangeEnableActionType"
+						targetId="q-quant-membros-suplentes" changeTo="true" />
+				</Q1:Case>
+				<Q1:Otherwise>
+					<Q1:action id="r1-a2" xsi:type="Q1:ChangeEnableActionType"
+						targetId="q-quant-membros-suplentes" changeTo="false" />
+				</Q1:Otherwise>
+			</Q1:Rule>
+
+			<Q1:Rule questionId="q-tipo-comissao" id="r2" xsi:type="Q1:SwitchRuleType">
+				<Q1:Case questionValue="Comissão Temporária Interna">
+					<Q1:action id="r2-a1" xsi:type="Q1:SetVariableValueActionType"
+						variableName="Fundamentacao"
+						value="Nos termos do art. 71, I, do Regimento Interno do Senado Federal," />
+				</Q1:Case>
+				<Q1:Otherwise>
+					<Q1:action id="r2-a2" xsi:type="Q1:SetVariableValueActionType"
+						variableName="Fundamentacao"
+						value="Nos termos do art. 71, II, do Regimento Interno do Senado Federal," />
+				</Q1:Otherwise>
+			</Q1:Rule>
+
+			<Q1:Rule questionId="q-qt-espacos-assinaturas" id="r3"
+				xsi:type="Q1:SwitchRuleType">
+				<Q1:Case questionValue="0">
+					<Q1:action id="r3-a1" xsi:type="Q1:SetVariableValueActionType"
+						variableName="Requeiro" value="requeiro" />
+				</Q1:Case>
+				<Q1:Otherwise>
+					<Q1:action id="r3-a2" xsi:type="Q1:SetVariableValueActionType"
+						variableName="Requeiro" value="requeremos" />
+				</Q1:Otherwise>
+			</Q1:Rule>
+
+			<Q1:Rule questionId="q-quant-suplentes" id="r4"
+				xsi:type="Q1:SwitchRuleType">
+				<Q1:Case questionValue="mesma_quant">
+					<Q1:action id="r4-a1" xsi:type="Q1:SetVariableValueActionType"
+						variableName="Suplentes" value=" com a mesma quantidade de membros suplentes" />
+				</Q1:Case>
+				<Q1:Case questionValue="nao-especificar">
+					<Q1:action id="r4-a2" xsi:type="Q1:SetVariableValueActionType"
+						variableName="Suplentes" value="" />
+				</Q1:Case>
+				<Q1:Otherwise>
+					<Q1:action id="r4-a3" xsi:type="Q1:SetVariableValueActionType"
+						variableName="Suplentes" value="pegarValor" />
+				</Q1:Otherwise>
+			</Q1:Rule>
+
+
+		</Q1:Rules>
+
+
+
+	</Q1:Wizard>
+
+	<xi:include xmlns:fo="http://www.w3.org/1999/XSL/Format"
+		xmlns:xi="http://www.lexml.gov.br/schema/xmlinclude" href="s001-1.xml">
+		<xi:match select="//fo:block[@id='objetoDoRequerimento']">
+		<xi:replaceChildren>
+
+
+			$util.valueOf.Fundamentacao
+			$util.valueOf.Requeiro a constituição de uma $util.valueOf.q-tipo-comissao
+			composta de $util.valueOf.q-quant-membros-titulares
+			($util.writeIntegerInWords($util.valueOf.q-quant-membros-titulares))
+			membros titulares
+			#if($util.valueOf.Suplentes=='pegarValor')
+			com $util.valueOf.q-quant-membros-suplentes
+			($util.writeIntegerInWords($util.valueOf.q-quant-membros-suplentes))
+			membros suplentes
+			#else
+			$util.valueOf.Suplentes
+			#end
+
+			#set($ressalvas=$util.splitValues($util.valueOf.q-ressalvas))
+			#set($qtRessalvas = $util.size($ressalvas))
+			#if($qtRessalvas > 0)
+			#if($qtRessalvas == 1) assegurada #else asseguradas #end
+			#foreach($ressalva in $ressalvas)
+			#if($foreach.count > 1)
+			#if($foreach.hasNext)
+			,
+			#else
+			e
+			#end
+			#end
+			$ressalva
+			#end
+			#end
+			para, no prazo de $util.valueOf.q-prazo
+			$util.writeDayInWords($util.valueOf.q-prazo),
+			${util.valueOf.q-objetivo}
+			#if(!$util.valueOf.q-objetivo.endsWith('.')).#end
+	
+		</xi:replaceChildren>
+		</xi:match>
+	</xi:include>
+
+</Q1:MadocDocument>

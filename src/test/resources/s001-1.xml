@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Q1:MadocSkeleton xmlns:Q1="http://www.lexml.gov.br/madoc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sf="http://www.senado.gov.br/requerimento/modelo/metadado"
+	xsi:schemaLocation="http://www.lexml.gov.br/madoc ../../main/xsd/Madoc.xsd http://www.senado.gov.br/requerimento/modelo/metadado ../../main/xsd/ModeloRequerimento.xsd">
+
+	<Q1:Metadata id="s001">
+		<sf:Titulo>Esqueleto padrão</sf:Titulo>
+		<sf:Indexacao>CPI, Criação, ...</sf:Indexacao>
+		<sf:PublicoAlvo>Senador</sf:PublicoAlvo>
+	</Q1:Metadata>
+
+	<Q1:Skeleton>
+		<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+			<fo:layout-master-set xmlns:fo="http://www.w3.org/1999/XSL/Format">
+				<fo:simple-page-master master-name="first"
+					page-height="29.7cm" page-width="21cm" margin-top="3.5cm"
+					margin-bottom="2.5cm" margin-left="3cm" margin-right="2.5cm">
+					<fo:region-body margin-top="2cm" />
+					<fo:region-before extent="2cm" />
+					<fo:region-after extent="1.0cm" />
+				</fo:simple-page-master>
+			</fo:layout-master-set>
+
+			<!-- starts actual layout -->
+			<fo:page-sequence master-reference="first">
+
+				<fo:flow flow-name="xsl-region-body" font-family="Times New Roman"
+					font-size="14pt">
+					<!-- this defines a title level 1 -->
+
+					<fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format"
+						font-size="16pt" text-align="center" font-weight="bold"
+						space-after="80pt" white-space-collapse="false">REQUERIMENTO Nº
+						&#160;&#160;&#160;&#160;&#160;&#160;, DE     </fo:block>
+
+					<!-- this defines a title level 2 -->
+					<fo:block text-align="justify" white-space-collapse="false"
+						text-indent="2.5cm" line-height="160%" id="objetoDoRequerimento">						
+					</fo:block>
+					#if($util.size($util.valueOf.q-complemento-objeto)>0)
+					#set($linhas=$util.valueOf.q-complemento-objeto.split('\n'))
+					#foreach($linha in $linhas)
+					<fo:block font-size="14pt" text-align="justify"
+						space-before="6pt" white-space-collapse="false" text-indent="2.5cm"
+						line-height="160%">
+						$linha
+					</fo:block>
+					#end
+					#end
+					#if($util.size($util.valueOf.q-justificativa)>0)
+					<fo:block font-size="16pt" space-before="24pt" text-align="center"
+						font-weight="bold" white-space-collapse="false"
+						xmlns:fo="http://www.w3.org/1999/XSL/Format">
+						JUSTIFICATIVA
+					</fo:block>
+					#set($linhas=$util.valueOf.q-justificativa.split('\n'))
+					#foreach($linha in $linhas)
+					<fo:block font-size="14pt" text-align="justify"
+						space-before="6pt" white-space-collapse="false" text-indent="2.5cm"
+						line-height="160%">
+						$linha
+					</fo:block>
+					#end
+					#end
+
+					<fo:block text-align="justify" white-space-collapse="false"
+						space-before="24pt" text-indent="2.5cm" line-height="160%">
+						$util.valueOf.q-local, $util.formatDateFull($util.valueOf.q-data).
+					</fo:block>
+					<fo:block text-align="left" space-before="30pt"
+						font-weight="bold" white-space-collapse="false" text-indent="5cm"
+						line-height="160%">
+						$util.valueOf.q-autoria
+					</fo:block>
+
+					#if($util.parseInt($util.valueOf.q-qt-espacos-assinaturas) > 0)
+					<fo:block space-before="24pt">
+						<fo:table border="0.5pt solid black">
+							<fo:table-column column-width="10mm" />
+							<fo:table-column column-width="80mm" />
+							<fo:table-column column-width="65mm" />
+
+							<fo:table-header>
+								<fo:table-row border="0.5pt solid black">
+									<fo:table-cell border="0.5pt solid black"
+										padding="2pt">
+										<fo:block font-weight="bold">Nº</fo:block>
+									</fo:table-cell>
+									<fo:table-cell border="0.5pt solid black"
+										padding="2pt">
+										<fo:block font-weight="bold">Nome do Senador</fo:block>
+									</fo:table-cell>
+									<fo:table-cell border="0.5pt solid black"
+										padding="2pt">
+										<fo:block font-weight="bold">Assinatura</fo:block>
+									</fo:table-cell>
+								</fo:table-row>
+							</fo:table-header>
+
+							<fo:table-body>
+								#foreach($assinatura in
+								[1..$util.parseInt($util.valueOf.q-qt-espacos-assinaturas)])
+								<fo:table-row border="0.5pt solid black"
+									line-height="160%">
+									<fo:table-cell border="0.5pt solid black"
+										padding="2pt">
+										<fo:block>$assinatura</fo:block>
+									</fo:table-cell>
+									<fo:table-cell border="0.5pt solid black">
+										<fo:block></fo:block>
+									</fo:table-cell>
+									<fo:table-cell border="0.5pt solid black">
+										<fo:block></fo:block>
+									</fo:table-cell>
+								</fo:table-row>
+								#end
+							</fo:table-body>
+
+						</fo:table>
+					</fo:block>
+					#end
+
+
+
+				</fo:flow>
+			</fo:page-sequence>
+
+		</fo:root>
+	</Q1:Skeleton>
+
+</Q1:MadocSkeleton>

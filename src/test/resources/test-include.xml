@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a>
+	<teste />
+	<xi:include href="test-sub-include.xml" xmlns:xi="http://www.lexml.gov.br/schema/xloom">
+	    
+	</xi:include>
+	<teste2 />
+</a>

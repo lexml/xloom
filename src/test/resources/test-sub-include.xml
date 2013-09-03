@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bb>
+	<testebb />
+	<xi:include href="simple.xml" xmlns:xi="http://www.lexml.gov.br/schema/xloom">
+	    
+	</xi:include>
+	<teste2bb />
+</bb>

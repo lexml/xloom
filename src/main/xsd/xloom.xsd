@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.lexml.gov.br/schema/xloom"
+	xmlns:tns="http://www.lexml.gov.br/schema/xloom"
+	elementFormDefault="qualified" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+	<import schemaLocation="http://www.w3.org/2007/schema-for-xslt20.xsd"
+		namespace="http://www.w3.org/1999/XSL/Transform"></import>
+	<element name="include" type="tns:Include"></element>
+
+	<complexType name="Include">
+		<complexContent>
+			<extension base="tns:CommandSequence">
+				<attribute name="href" type="anyURI" use="required"></attribute>
+				<attribute name="select" type="string" use="optional"></attribute>
+				<attribute name="preProcess" type="boolean" use="optional" default="false"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="Match">
+		<complexContent>
+			<extension base="tns:CommandSequence">
+				<attribute name="select" type="string" use="required"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="Replace">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded">
+			</any>
+		</sequence>
+		<attribute name="this" type="boolean" use="optional" default="false"></attribute>
+	</complexType>
+
+	<complexType name="InsertBefore">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded"></any>
+		</sequence>
+	</complexType>
+
+	<complexType name="InsertAfter">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded"></any>
+		</sequence>
+	</complexType>
+
+	<complexType name="Clear"></complexType>
+
+	<complexType name="ReplaceChildren">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded"></any>
+		</sequence>
+	</complexType>
+
+	<complexType name="AddFirst">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded"></any>
+		</sequence>
+	</complexType>
+
+	<complexType name="AddLast">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded"></any>
+		</sequence>
+	</complexType>
+
+	<complexType name="ClearChildren"></complexType>
+
+	<complexType name="SetAttributes">
+	    <anyAttribute processContents="lax"/>		
+	</complexType>
+
+	<complexType name="RemoveAttributes">
+		<anyAttribute processContents="lax"/>
+	</complexType>
+
+	<complexType name="ClearAttributes"></complexType>
+
+	<complexType name="ExternalXsl">
+		<attribute name="href" type="anyURI" use="required"></attribute>
+	</complexType>
+
+
+	<complexType name="CommandSequence" abstract="true">
+		<choice minOccurs="0" maxOccurs="unbounded">
+			<element name="match" type="tns:Match"></element>
+			<element ref="xsl:stylesheet"></element>
+			<element ref="tns:include"></element>
+			<element name="replace" type="tns:Replace"></element>
+			<element name="insertBefore" type="tns:InsertBefore"></element>
+			<element name="insertAfter" type="tns:InsertAfter"></element>
+			<element name="clear" type="tns:Clear"></element>
+			<element name="replaceChildren"
+				type="tns:ReplaceChildren">
+			</element>
+			<element name="addFirst" type="tns:AddFirst"></element>
+			<element name="addLast" type="tns:AddLast"></element>
+			<element name="clearChildren" type="tns:ClearChildren"></element>
+			<element name="clearAttributes"
+				type="tns:ClearAttributes">
+			</element>
+			<element name="setAttributes" type="tns:SetAttributes"></element>
+			<element name="removeAttributes"
+				type="tns:RemoveAttributes">
+			</element>
+			<element name="externalXsl" type="tns:ExternalXsl"></element>
+			<element name="prefixId" type="tns:PrefixId"></element>
+		</choice>
+	</complexType>
+
+	<complexType name="PrefixId">
+		<attribute name="prefix" type="string" use="required"></attribute>
+	</complexType>
+</schema>

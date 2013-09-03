@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a>
+	<teste />
+	<xi:include href="test2.xml" xmlns:xi="http://www.lexml.gov.br/schema/xloom" select="//A">
+	    <xi:setAttributes f="eee"/>
+	    <xi:match select="b/c">
+	    	<xi:addLast><f teste="123123">dadasd</f></xi:addLast>
+	    </xi:match>
+	</xi:include>
+	<teste2 />
+</a>
