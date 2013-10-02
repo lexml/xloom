@@ -192,7 +192,10 @@ class XLoomProcessor(val resolver: URIResolver) extends XmlUtils with Processor 
     }
 
     private[this] def processStyleSheet(commandPath: XmlPath, inputPath: XmlPath): List[XmlTree] = {
-      val tf = TransformerFactory.newInstance().newTransformer(commandPath.tree)
+      val dr = new DOMResult()
+      TransformerFactory.newInstance().newTransformer().transform(commandPath.tree, dr)
+      val xslNode = dr.getNode()
+      val tf = TransformerFactory.newInstance().newTransformer(new DOMSource(xslNode))
       val sr = ScalesResult()
       tf.transform(inputPath.tree, sr)
       List(sr.doc.rootElem)
