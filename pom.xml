@@ -3,7 +3,7 @@
 	
 	<groupId>br.gov.lexml</groupId>
 	<artifactId>xloom</artifactId>
-	<version>2.0.3-SNAPSHOT</version>
+	<version>2.0.3</version>
 	
 	<properties>
 		<scala.version>2.10</scala.version>
@@ -20,7 +20,7 @@
 		<url>https://github.com/lexml/${project.artifactId}</url>
 		<developerConnection>scm:git:https://github.com/lexml/${project.artifactId}.git</developerConnection>
 		<connection>scm:git:https://github.com/lexml/${project.artifactId}.git</connection>
-      <tag>HEAD</tag>
+      <tag>xloom-2.0.3</tag>
     </scm>
 
 	<distributionManagement>
