@@ -18,6 +18,7 @@ import javax.xml.transform.TransformerFactory
 import org.apache.commons.io.output.StringBuilderWriter
 import javax.xml.transform.stream.StreamResult
 import javax.xml.namespace.NamespaceContext
+import scala.language.implicitConversions
 
 abstract sealed class XNode {
   val domNode: Option[Node]

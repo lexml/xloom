@@ -31,6 +31,7 @@ import javax.xml.transform.stream.StreamResult
 import java.io.ByteArrayInputStream
 import java.io.StringReader
 import grizzled.slf4j.Logging
+import scala.language.implicitConversions
 
 case class XLoomResult(doc: Doc) {
   def asSource: Source = doc

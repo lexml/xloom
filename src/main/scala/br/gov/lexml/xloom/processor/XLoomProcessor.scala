@@ -18,7 +18,7 @@ import javax.xml.transform.URIResolver
 import javax.xml.xpath.XPathFactory
 import org.w3c.dom.Element
 import grizzled.slf4j.Logging
-
+import scala.language.implicitConversions
 
 object QNames {
   val ns = "http://www.lexml.gov.br/schema/xloom"
