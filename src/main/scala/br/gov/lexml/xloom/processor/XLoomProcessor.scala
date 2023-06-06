@@ -59,32 +59,32 @@ class XLoomProcessor(resolver: URIResolver) extends Logging {
       val n = readDocument(resolver.resolve(href, base.orNull))
       XNode.node2XNode(n.getDocumentElement).asInstanceOf[XElement]
     }
-    private[this] def processCommands(nl: List[XNode]): XNode ⇒ List[XNode] = {
+    private[this] def processCommands(nl: List[XNode]): XNode => List[XNode] = {
       def id(x: XNode) = List(x)
       val cmds = nl collect {
-        case e: XElement ⇒ processCommand(e)
+        case e: XElement => processCommand(e)
       }
-      cmds.foldLeft(id _) { case (f1, f) ⇒ f1 andThen { _.flatMap(f) } }
+      cmds.foldLeft(id _) { case (f1, f) => f1 andThen { _.flatMap(f) } }
     }
-    private[this] def processCommand(el: XElement): XNode ⇒ List[XNode] = el.name match {
-      case Q.include ⇒ {
+    private[this] def processCommand(el: XElement): XNode => List[XNode] = el.name match {
+      case Q.include => {
         val href = el.attributes(Q.href)
         val select = el.attributes.get(Q.select)
-        val preProcess = el.attributes.get(Q.preProcess).collect({ case "true" ⇒ true }).getOrElse(false)
+        val preProcess = el.attributes.get(Q.preProcess).collect({ case "true" => true }).getOrElse(false)
         val subCmd = processCommands(el.children)
         val doc1 = getDocument(href)
         val nl1 = if (preProcess) {
           processIncludes(doc1)
         } else { List(doc1) }
-        val proc: XNode ⇒ List[XNode] = select match {
-          case None ⇒ doc ⇒ List(doc)
-          case Some(xpt) ⇒ doc ⇒ {
+        val proc: XNode => List[XNode] = select match {
+          case None => doc => List(doc)
+          case Some(xpt) => doc => {
             val xp = XPathFactory.newInstance().newXPath()
             xp.setNamespaceContext(el)
             doc.query(xp.compile(xpt))
           }
         }        
-        _ ⇒ nl1.flatMap(proc).flatMap(subCmd)
+        _ => nl1.flatMap(proc).flatMap(subCmd)
       }
       case Q.prefixId => {
         val prefix = el.attributes(Q.prefix)       
@@ -97,7 +97,7 @@ class XLoomProcessor(resolver: URIResolver) extends Logging {
         } : PartialFunction[XNode,List[XNode]])
       }
 
-      case Q._match ⇒ {
+      case Q._match => {
         val select = el.attributes(Q.select)
         val xp = XPathFactory.newInstance().newXPath()
         xp.setNamespaceContext(el)
@@ -107,12 +107,12 @@ class XLoomProcessor(resolver: URIResolver) extends Logging {
         _.replaceByXPath(xpe, subCmd)
       }
 
-      case Q.replace ⇒ { (n: XNode) ⇒
-        def hasThis(el: XElement) = el.attributes.get(Q._this).collect({ case "true" ⇒ true }).
+      case Q.replace => { (n: XNode) =>
+        def hasThis(el: XElement) = el.attributes.get(Q._this).collect({ case "true" => true }).
           getOrElse(false)
         val replaceThis: PartialFunction[XNode, List[XNode]] = {
-          case el: XElement if hasThis(el) ⇒ List(n)
-          case el: XElement if el.name == Q._thisEl ⇒ List(n)
+          case el: XElement if hasThis(el) => List(n)
+          case el: XElement if el.name == Q._thisEl => List(n)
         }
 
         if (hasThis(el)) {
@@ -122,36 +122,36 @@ class XLoomProcessor(resolver: URIResolver) extends Logging {
         }
       }
 
-      case Q.insertBefore ⇒ n ⇒ el.children :+ n
-      case Q.insertAfter ⇒ n ⇒ n :: el.children
-      case Q.clear ⇒ _ ⇒ List()
-      case Q.replaceChildren ⇒ n ⇒ List(n.replaceChildren(el.children))
-      case Q.addFirst ⇒ n ⇒ List(n.insertBeforeFirstChild(el.children))
-      case Q.addLast ⇒ n ⇒ List(n.addAfterLastChild(el.children))
-      case Q.clearChildren ⇒ n ⇒ List(n.clearChildren)
-      case Q.externalXsl ⇒ {
+      case Q.insertBefore => n => el.children :+ n
+      case Q.insertAfter => n => n :: el.children
+      case Q.clear => _ => List()
+      case Q.replaceChildren => n => List(n.replaceChildren(el.children))
+      case Q.addFirst => n => List(n.insertBeforeFirstChild(el.children))
+      case Q.addLast => n => List(n.addAfterLastChild(el.children))
+      case Q.clearChildren => n => List(n.clearChildren)
+      case Q.externalXsl => {
         val href = el.attributes(Q.href)
         val xslSrc = resolver.resolve(href, base.orNull)
         val tf = TransformerFactory.newInstance().newTransformer(xslSrc)
         _.applyTransformer(tf)
       }
-      case Q.stylesheet ⇒ {
+      case Q.stylesheet => {
         val xslSrc = new DOMSource(XNode.xnode2Node(el))
         val tf = TransformerFactory.newInstance().newTransformer(xslSrc)
         _.applyTransformer(tf)
       }
-      case Q.clearAttributes ⇒ n ⇒ List(n.clearAttributes)
-      case Q.setAttributes ⇒ {
-        n ⇒ List(n.modifyAttributes(m ⇒ m ++ el.attributes))
+      case Q.clearAttributes => n => List(n.clearAttributes)
+      case Q.setAttributes => {
+        n => List(n.modifyAttributes(m => m ++ el.attributes))
       }
-      case Q.removeAttributes ⇒ n ⇒ List(n.modifyAttributes(m ⇒ m -- el.attributes.keys))
-      case qn ⇒ n ⇒ List(n)
+      case Q.removeAttributes => n => List(n.modifyAttributes(m => m -- el.attributes.keys))
+      case qn => n => List(n)
     }
 
     def processIncludes(xnode: XNode): List[XNode] = {
-      def processIncludeTD: XNode ⇒ List[XNode] = _.topDownUntil(processInclude)
+      def processIncludeTD: XNode => List[XNode] = _.topDownUntil(processInclude)
       def processInclude: PartialFunction[XNode, List[XNode]] = {
-        case e: XElement if e.name == Q.include ⇒ {
+        case e: XElement if e.name == Q.include => {
           val nl = processCommand(e)(null)
           nl.flatMap(processIncludeTD)
         }
@@ -195,10 +195,10 @@ class XLoomProcessor(resolver: URIResolver) extends Logging {
    * retornando o primeiro elemento do resultado.
    */
   def processInclude(s: Source): Node = s match {
-    case ss: StreamSource ⇒ processInclude(ss.getInputStream(), ss.getSystemId())
-    case ds: DOMSource ⇒ processIncludeN(ds.getNode())
-    case ss: SAXSource ⇒ processInclude(ss.getInputSource())
-    case s ⇒ processIncludeN(readDocument(s))
+    case ss: StreamSource => processInclude(ss.getInputStream(), ss.getSystemId())
+    case ds: DOMSource => processIncludeN(ds.getNode())
+    case ss: SAXSource => processInclude(ss.getInputSource())
+    case s => processIncludeN(readDocument(s))
   }
 
   /**
