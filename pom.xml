@@ -3,7 +3,7 @@
         
         <groupId>br.gov.lexml</groupId>
         <artifactId>xloom</artifactId>
-	<version>2.2.0</version>
+	<version>2.2.1-SNAPSHOT</version>
 	<name>Xloom</name>
 	<description>Xloom - Ferramentas de manipulação de XML</description>
 	<url>https://github.com/lexml/xloom</url>
@@ -21,7 +21,7 @@
                 <url>https://github.com/lexml/${project.artifactId}</url>
                 <developerConnection>scm:git:https://github.com/lexml/xloom.git</developerConnection>
                 <connection>scm:git:https://github.com/lexml/xloom.git</connection>
-                <tag>xloom-2.2.0</tag>
+                <tag>HEAD</tag>
     </scm>
 
         <licenses>
