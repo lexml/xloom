@@ -3,7 +3,10 @@
         
         <groupId>br.gov.lexml</groupId>
         <artifactId>xloom</artifactId>
-        <version>2.2.0-SNAPSHOT</version>
+	<version>2.2.0-SNAPSHOT</version>
+	<name>Xloom</name>
+	<description>Xloom - Ferramentas de manipulação de XML</description>
+	<url>https://github.com/lexml/xloom</url>
         
         <properties>
                 <scala.version>2.13</scala.version>
@@ -11,14 +14,13 @@
                 
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-                <!-- github server corresponds to entry in ~/.m2/settings.xml -->
-                <github.global.server>github</github.global.server>
+         	<maven.javadoc.failOnError>false</maven.javadoc.failOnError>
         </properties>
 
         <scm>
                 <url>https://github.com/lexml/${project.artifactId}</url>
-                <developerConnection>scm:git:https://github.com/lexml/${project.artifactId}.git</developerConnection>
-                <connection>scm:git:https://github.com/lexml/${project.artifactId}.git</connection>
+                <developerConnection>scm:git:https://github.com/lexml/xloom.git</developerConnection>
+                <connection>scm:git:https://github.com/lexml/xloom.git</connection>
                 <tag>HEAD</tag>
     </scm>
 
@@ -120,12 +122,6 @@
                         <scope>test</scope>
                 </dependency>
 
-               <!-- <dependency>
-                        <groupId>jaxen</groupId>
-                        <artifactId>jaxen</artifactId>
-                        <version>1.2.0</version>
-                </dependency>-->
-
                 <dependency>
                         <groupId>org.scala-lang</groupId>
                         <artifactId>scala-library</artifactId>
@@ -154,8 +150,8 @@
                         <artifactId>grizzled-slf4j_${scala.version}</artifactId>
                         <version>1.3.4</version>
                 </dependency>
-                <!-- https://mvnrepository.com/artifact/org.scala-lang.modules/scala-xml -->
-                <dependency>
+		
+		<dependency>
                         <groupId>org.scala-lang.modules</groupId>
                         <artifactId>scala-xml_${scala.version}</artifactId>
                         <version>2.1.0</version>
