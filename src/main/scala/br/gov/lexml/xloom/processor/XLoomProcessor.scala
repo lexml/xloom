@@ -136,7 +136,7 @@ class XLoomProcessor(resolver: URIResolver) extends Logging {
         _.applyTransformer(tf)
       }
       case Q.stylesheet => {
-        val xslSrc = new DOMSource(XNode.xnode2Node(el))
+        val xslSrc = new DOMSource(XNode.xnode2Node(el).getOwnerDocument)
         val tf = TransformerFactory.newInstance().newTransformer(xslSrc)
         _.applyTransformer(tf)
       }
